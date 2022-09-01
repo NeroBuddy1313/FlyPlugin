@@ -28,11 +28,11 @@ public class FlyCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (!player.hasPermission("fly.use")) {
-            player.sendMessage(getPrefix() + "§cDafür hast du keine Rechte!");
+            player.sendMessage(getPrefix() + "§cYou do not have permission to use that command!");
             return true;
         }
         if (!(args.length == 0 || args.length == 1)) {
-            sender.sendMessage(getPrefix() + "§6Bitte benutze /fly <Spieler>");
+            sender.sendMessage(getPrefix() + "§6Usage /fly <player>");
             return true;
         } else {
             setTargetFly(sender, args);
@@ -45,7 +45,7 @@ public class FlyCommand implements CommandExecutor {
         UUID uuid;
         if (args.length == 0) {
             if(!(sender instanceof Player)) {
-                sender.sendMessage(getPrefix() + "§6Bitte benutze /fly <Spieler>");
+                sender.sendMessage(getPrefix() + "§6Usage /fly <Spieler>");
                 return;
             }
             player = (Player) sender;
@@ -54,31 +54,29 @@ public class FlyCommand implements CommandExecutor {
                 player.setAllowFlight(true);
                 player.setFlying(true);
                 getFlyList().add(uuid);
-                player.sendMessage(getPrefix() + "§6Flugmodus §aaktiviert§6!");
+                player.sendMessage(getPrefix() + "§6Flymode §aactivated§6!");
             } else {
                 player.setAllowFlight(false);
                 player.setFlying(false);
-                player.setFallDistance(0.0F);
                 getFlyList().remove(uuid);
-                player.sendMessage(getPrefix() + "§6Flugmodus §4deaktiviert§6!");
+                player.sendMessage(getPrefix() + "§6Flymode §4deactivated§6!");
             }
         } else {
             player = Bukkit.getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(getPrefix() + "§cDer Spieler §3" + args[0] + "§c konnte nicht gefunden werden!");
+                sender.sendMessage(getPrefix() + "§cThe player §3" + args[0] + "§c could not be found!");
             } else {
                 uuid = player.getUniqueId();
                 if (!getFlyList().contains(uuid)) {
                     player.setAllowFlight(true);
                     player.setFlying(true);
                     getFlyList().add(uuid);
-                    player.sendMessage(getPrefix() + "§6Flugmodus §aaktiviert§6!");
+                    player.sendMessage(getPrefix() + "§6Flymode §aactivated§6!");
                 } else {
                     player.setAllowFlight(false);
                     player.setFlying(false);
-                    player.setFallDistance(0.0F);
                     getFlyList().remove(uuid);
-                    player.sendMessage(getPrefix() + "§6Flugmodus §4deaktiviert§6!");
+                    player.sendMessage(getPrefix() + "§6Flymode §4deactivated§6!");
                 }
             }
         }

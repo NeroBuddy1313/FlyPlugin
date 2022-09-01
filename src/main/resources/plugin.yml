@@ -6,4 +6,3 @@ commands:
   fly:
     aliases:
       - flymode
-      - flugmodus
