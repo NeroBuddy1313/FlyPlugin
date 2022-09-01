@@ -1,0 +1,9 @@
+name: Fly
+version: '${project.version}'
+main: de.nerobuddy.fly.Fly
+api-version: 1.19
+commands:
+  fly:
+    aliases:
+      - flymode
+      - flugmodus
