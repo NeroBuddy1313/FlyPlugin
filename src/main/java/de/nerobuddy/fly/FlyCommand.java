@@ -45,7 +45,7 @@ public class FlyCommand implements CommandExecutor {
         UUID uuid;
         if (args.length == 0) {
             if(!(sender instanceof Player)) {
-                sender.sendMessage(getPrefix() + "§6Usage /fly <Spieler>");
+                sender.sendMessage(getPrefix() + "§6Usage /fly <player>");
                 return;
             }
             player = (Player) sender;
