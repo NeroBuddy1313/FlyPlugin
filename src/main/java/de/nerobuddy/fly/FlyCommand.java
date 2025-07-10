@@ -64,7 +64,44 @@ public class FlyCommand implements CommandExecutor {
         } else {
             player = Bukkit.getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(getPrefix() + "§cThe player §3" + args[0] + "§c could not be found!");
+                switch (args[0].toLowerCase()) {
+                    case "@a":
+                        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                            if (!getFlyList().contains(onlinePlayer.getUniqueId())) {
+                                onlinePlayer.setAllowFlight(true);
+                                onlinePlayer.setFlying(true);
+                                getFlyList().add(onlinePlayer.getUniqueId());
+                                onlinePlayer.sendMessage(getPrefix() + "§6Flymode §aactivated§6!");
+                            } else {
+                                onlinePlayer.setAllowFlight(false);
+                                onlinePlayer.setFlying(false);
+                                getFlyList().remove(onlinePlayer.getUniqueId());
+                                onlinePlayer.sendMessage(getPrefix() + "§6Flymode §4deactivated§6!");
+                            }
+                        }
+                        return;
+                    case "@r":
+                        Player randomPlayer = Bukkit.getOnlinePlayers().stream().skip((int) (Bukkit.getOnlinePlayers().size() * Math.random())).findFirst().orElse(null);
+                        if (randomPlayer != null) {
+                            uuid = randomPlayer.getUniqueId();
+                            if (!getFlyList().contains(uuid)) {
+                                randomPlayer.setAllowFlight(true);
+                                randomPlayer.setFlying(true);
+                                getFlyList().add(uuid);
+                                randomPlayer.sendMessage(getPrefix() + "§6Flymode §aactivated§6!");
+                            } else {
+                                randomPlayer.setAllowFlight(false);
+                                randomPlayer.setFlying(false);
+                                getFlyList().remove(uuid);
+                                randomPlayer.sendMessage(getPrefix() + "§6Flymode §4deactivated§6!");
+                            }
+                        } else {
+                            sender.sendMessage(getPrefix() + "§cNo players online to toggle fly mode!");
+                        }
+                        return;
+                    default:
+                        sender.sendMessage(getPrefix() + "§cThe player §3" + args[0] + "§c could not be found!");
+                }
             } else {
                 uuid = player.getUniqueId();
                 if (!getFlyList().contains(uuid)) {
